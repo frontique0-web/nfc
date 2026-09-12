@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#07100F">
+<title>Havale Bilgileri</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#07100F;
+    --ink-2:#0B1A18;
+    --surface:#101F1C;
+    --surface-2:#162925;
+    --line:rgba(233,226,210,.10);
+    --gold-1:#EBD9AE;
+    --gold-2:#C4A265;
+    --gold-line:rgba(196,162,101,.34);
+    --text:#F2EFE8;
+    --muted:rgba(242,239,232,.48);
+    --ok:#86CBA8;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+
+  body{
+    min-height:100vh;
+    background:radial-gradient(140% 90% at 50% -20%, #1A332E 0%, var(--ink-2) 42%, var(--ink) 100%);
+    color:var(--text);
+    font-family:Inter, system-ui, -apple-system, sans-serif;
+    line-height:1.55;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:32px 20px calc(32px + env(safe-area-inset-bottom));
+    text-align:center;
+  }
+
+  .sheet{width:100%;max-width:420px}
+
+  .rise{opacity:0;transform:translateY(14px);animation:rise .7s cubic-bezier(.2,.7,.3,1) forwards}
+  .d1{animation-delay:.05s} .d2{animation-delay:.14s} .d3{animation-delay:.24s} .d4{animation-delay:.34s}
+  @keyframes rise{to{opacity:1;transform:none}}
+
+  .eyebrow{
+    display:flex;align-items:center;justify-content:center;gap:14px;
+    font-size:11.5px;font-weight:500;color:var(--gold-2);
+    letter-spacing:.08em;margin-bottom:20px;
+  }
+  .eyebrow .rule{width:58px;height:1px;background:var(--gold-line)}
+
+  .shop{
+    font-size:clamp(25px,7vw,32px);
+    font-weight:600;letter-spacing:-.02em;line-height:1.22;
+  }
+  .bank{
+    margin-top:10px;
+    font-size:clamp(17px,4.6vw,19px);
+    font-weight:400;color:var(--gold-1);letter-spacing:.01em;
+  }
+
+  .card{
+    position:relative;overflow:hidden;
+    margin-top:26px;
+    background:linear-gradient(160deg,var(--surface-2) 0%,var(--surface) 55%,#0C1917 100%);
+    border:1px solid var(--line);
+    border-radius:20px;
+    box-shadow:0 26px 50px -30px #000, inset 0 1px 0 rgba(255,255,255,.05);
+  }
+  .card::after{
+    content:"";position:absolute;top:0;left:-60%;width:45%;height:100%;
+    background:linear-gradient(100deg,transparent,rgba(235,217,174,.10),transparent);
+    transform:skewX(-18deg);
+    animation:sheen 1.5s .6s ease-out forwards;
+    pointer-events:none;
+  }
+  @keyframes sheen{to{left:120%}}
+
+  .row{padding:22px 20px}
+  .row + .row{border-top:1px solid var(--line)}
+
+  .label{
+    font-size:11px;font-weight:500;color:var(--gold-2);
+    letter-spacing:.07em;margin-bottom:10px;
+  }
+
+  .value{font-size:18px;font-weight:500;line-height:1.45;word-break:break-word}
+  .value.mono{
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:clamp(17px,4.9vw,20px);
+    font-weight:600;word-spacing:.14em;
+  }
+
+  .act{
+    margin:16px auto 0;width:100%;
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    border:0;border-radius:12px;padding:14px;
+    font-family:inherit;font-size:15px;font-weight:600;cursor:pointer;
+    transition:transform .14s ease, background .3s ease, color .3s ease, box-shadow .3s ease;
+  }
+  .act:active{transform:scale(.98)}
+  .act:focus-visible{outline:2px solid var(--gold-1);outline-offset:3px}
+  .act svg{width:17px;height:17px;stroke-width:2;flex:none}
+
+  .act.primary{background:linear-gradient(180deg,var(--gold-1),var(--gold-2));color:#0B1A18}
+  .act.secondary{background:transparent;color:var(--text);box-shadow:inset 0 0 0 1px var(--line)}
+  .act.done{background:transparent;color:var(--ok);box-shadow:inset 0 0 0 1px rgba(134,203,168,.5)}
+
+  .act .ic-check{display:none}
+  .act.done .ic-copy{display:none}
+  .act.done .ic-check{display:block;animation:pop .35s cubic-bezier(.2,1.4,.4,1)}
+  @keyframes pop{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+
+  .note{
+    margin-top:22px;
+    font-size:13px;font-weight:300;color:var(--muted);line-height:1.75;
+    max-width:32ch;margin-left:auto;margin-right:auto;
+  }
+  .brand{
+    display:inline-flex;align-items:center;gap:8px;
+    margin-top:16px;padding:9px 16px;border-radius:999px;
+    font-size:12.5px;font-weight:400;letter-spacing:.01em;
+    color:rgba(242,239,232,.34);text-decoration:none;
+    box-shadow:inset 0 0 0 1px rgba(242,239,232,.07);
+    transition:color .3s ease, box-shadow .3s ease;
+  }
+  .brand svg{width:14px;height:14px;flex:none}
+  .brand:hover,.brand:focus-visible{color:var(--gold-1);box-shadow:inset 0 0 0 1px var(--gold-line)}
+  .brand:focus-visible{outline:2px solid var(--gold-1);outline-offset:3px}
+
+  @media (prefers-reduced-motion:reduce){
+    .rise{animation:none;opacity:1;transform:none}
+    .card::after{display:none}
+    .act,.act.done .ic-check{transition:none;animation:none}
+  }
+</style>
+</head>
+<body>
+
+<main class="sheet">
+
+  <div class="eyebrow rise d1">
+    <span class="rule"></span><span>HAVALE / EFT</span><span class="rule"></span>
+  </div>
+
+  <header class="rise d2">
+    <h1 class="shop" id="shop">İşletme Adı</h1>
+    <p class="bank" id="bank">Banka</p>
+  </header>
+
+  <section class="card rise d3">
+
+    <div class="row">
+      <p class="label">IBAN</p>
+      <p class="value mono" id="iban">TR00 0000 0000 0000 0000 0000 00</p>
+      <button class="act primary" id="ibanBtn" data-label="IBAN'ı kopyala">
+        <svg class="ic-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        <svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+        <span>IBAN'ı kopyala</span>
+      </button>
+    </div>
+
+    <div class="row" id="holderRow">
+      <p class="label">ALICI ADI</p>
+      <p class="value" id="holder">&mdash;</p>
+      <button class="act secondary" id="holderBtn" data-label="Adı kopyala">
+        <svg class="ic-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        <svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+        <span>Adı kopyala</span>
+      </button>
+    </div>
+
+  </section>
+
+  <p class="note rise d4" id="note">Banka uygulamanızda Havale'yi açın ve bilgileri yapıştırın.</p>
+  <div class="rise d4">
+    <a class="brand" id="brand" href="https://wa.me/905064678440?text=Merhaba%2C%20i%C5%9Fletmem%20i%C3%A7in%20NFC%20IBAN%20kart%C4%B1%20yapt%C4%B1rmak%20istiyorum." target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.247-.694.247-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413"/></svg>
+      <span>Siz de böyle bir kart yaptırın</span>
+    </a>
+  </div>
+
+</main>
+
+<script>
+(function () {
+  var q = new URLSearchParams(location.search);
+
+  function val(keys, fb) {
+    for (var i = 0; i < keys.length; i++) {
+      var v = q.get(keys[i]);
+      if (v && v.trim()) return v.trim();
+    }
+    return fb;
+  }
+
+  var shop   = val(['name','shop'], 'İşletme Adı');
+  var bank   = val(['bank'], '');
+  var holder = val(['holder','owner'], '');
+  var note   = val(['note'], '');
+  var iban   = val(['iban'], '').replace(/[\s\-]/g, '').toUpperCase();
+
+  var elShop = document.getElementById('shop');
+  var elBank = document.getElementById('bank');
+  var elIban = document.getElementById('iban');
+  var elHold = document.getElementById('holder');
+  var elNote = document.getElementById('note');
+  var ibanBtn = document.getElementById('ibanBtn');
+  var holdBtn = document.getElementById('holderBtn');
+
+  elShop.textContent = shop;
+  document.title = shop;
+
+  if (bank) { elBank.textContent = bank; } else { elBank.style.display = 'none'; }
+  if (note) { elNote.textContent = note; }
+
+  if (holder) { elHold.textContent = holder; }
+  else { document.getElementById('holderRow').style.display = 'none'; }
+
+  if (iban) {
+    elIban.textContent = iban.replace(/(.{4})/g, '$1 ').trim();
+  } else {
+    elIban.textContent = 'IBAN bulunamadı';
+    elIban.classList.remove('mono');
+    ibanBtn.disabled = true;
+    ibanBtn.style.opacity = '.35';
+  }
+
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text);
+    }
+    return new Promise(function (res, rej) {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly','');
+      ta.style.position = 'fixed';
+      ta.style.top = '-1000px';
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, ta.value.length);
+      var ok = false;
+      try { ok = document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(ta);
+      ok ? res() : rej();
+    });
+  }
+
+  function bind(btn, getText) {
+    if (!btn) return;
+    var t, span = btn.querySelector('span');
+    btn.addEventListener('click', function () {
+      var text = getText();
+      if (!text) return;
+      copyText(text).then(function () {
+        span.textContent = 'Kopyalandı';
+        btn.classList.add('done');
+        if (navigator.vibrate) navigator.vibrate(15);
+        clearTimeout(t);
+        t = setTimeout(function () {
+          span.textContent = btn.dataset.label;
+          btn.classList.remove('done');
+        }, 2200);
+      }).catch(function () {
+        span.textContent = 'Kopyalanamadı, uzun basın';
+      });
+    });
+  }
+
+  bind(ibanBtn, function () { return iban; });
+  bind(holdBtn, function () { return holder; });
+})();
+</script>
+
+</body>
+</html>
